@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+Cell {
+  border-width: 5px;
+  border: solid white;
+  width: 100px;
+  height: 100px;
+}
