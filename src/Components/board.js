@@ -87,7 +87,18 @@ class Board extends React.Component {
         (currState) => {
           console.log(loc);
           const oldBoardState = _.cloneDeep(currState.boardState);
-          oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = currState.turn;
+          oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = "x"; //currState.turn;
+
+          let oppRow = Math.floor(Math.random() * 3);
+          let oppColumn = Math.floor(Math.random() * 3);
+          console.log(oppRow, oppColumn);
+          let counter = 0;
+          while (counter++ < 100 && oldBoardState[oppRow][oppColumn]) {
+            oppRow = Math.floor(Math.random() * 3);
+            oppColumn = Math.floor(Math.random() * 3);
+          }
+          oldBoardState[oppRow][oppColumn] = "o";
+
           const newState = {
             boardState: oldBoardState,
             turn: currState.turn === "x" ? "o" : "x",
@@ -107,7 +118,7 @@ class Board extends React.Component {
 
   checkWin = (board, turn) => {
     for (let row of board) {
-      if (row.filter((x) => x === turn).length === 3) return turn;
+      if (row.filter((x) => x === row[0] && x).length === 3) return row[0];
     }
     for (let i = 0; i < 3; i++) {
       if (
