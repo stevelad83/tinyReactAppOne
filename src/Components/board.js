@@ -81,33 +81,25 @@ class Board extends React.Component {
   turnCount = 0;
 
   markSquare = (loc, turn) => {
-    console.log(this.turnCount);
     if (
       this.state.boardState[parseInt(loc[0])][parseInt(loc[2])] === "" &&
       !this.state.winner
     ) {
       this.setState((currState) => {
-        console.log(loc, "<<< player move");
         const oldBoardState = _.cloneDeep(currState.boardState);
         let currTurn = "x";
-        oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = currTurn; //currState.turn;
-        console.log(this.turnCount);
-        this.turnCount++;
-        console.log(this.turnCount);
-        // after player move, check if win
+        oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = currTurn;
+
         if (this.checkWin(oldBoardState, currTurn, this.turnCount)) {
-          //end game, return state with winner
           const newState = {
             boardState: oldBoardState,
             winner: this.checkWin(oldBoardState, currTurn, this.turnCount),
           };
-          console.log(newState);
+
           return newState;
         } else {
-          //continue
           currTurn = "o";
 
-          //randomise generated computer input
           let oppRow = Math.floor(Math.random() * 3);
           let oppColumn = Math.floor(Math.random() * 3);
 
@@ -118,30 +110,23 @@ class Board extends React.Component {
           }
 
           if (counter < 100) {
-            console.log(oppRow, oppColumn, "<<< comp move");
             oldBoardState[oppRow][oppColumn] = currTurn;
-            console.log(this.turnCount);
-            this.turnCount++;
-            console.log(this.turnCount);
-            // draw logic
-          }
 
-          // after computer move, check if win
+            this.turnCount++;
+          }
 
           const newState = {
             boardState: oldBoardState,
             winner: this.checkWin(oldBoardState, currTurn, this.turnCount),
           };
-          console.log(newState);
+
           return newState;
         }
       });
-      console.log(this.turnCount);
     }
   };
 
   checkWin = (board, turn, turnCount) => {
-    console.log(turnCount);
     for (let row of board) {
       if (row.filter((x) => x === row[0] && x).length === 3) return row[0];
     }
@@ -158,8 +143,8 @@ class Board extends React.Component {
       return turn;
     if (board[0][2] === turn && board[1][1] === turn && board[2][0] === turn)
       return turn;
-    console.log(turnCount, "<==== turncount");
-    if (turnCount === 14) return "Draw!";
+
+    if (turnCount === 8) return "No-one";
   };
 }
 
