@@ -4,12 +4,10 @@ import "./App.css";
 import Board from "./Components/board";
 
 //switch player 1
-// draw notification
 // reset board button
 // score recorder
-// mp3 to play when win occurs
-
 // flip between 1 and 2 player
+// mp3 to play when win occurs
 
 class App extends React.Component {
   render() {
