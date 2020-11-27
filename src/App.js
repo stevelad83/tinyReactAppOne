@@ -3,11 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Board from "./Components/board";
 
-
-
-
-// strikethrough line
-// title *
+//switch player 1
 // draw notification
 // reset board button
 // score recorder
@@ -26,8 +22,6 @@ class App extends React.Component {
       </div>
     );
   }
-
-
 }
 
 export default App;
