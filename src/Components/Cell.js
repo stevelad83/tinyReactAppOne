@@ -6,12 +6,14 @@ class Cell extends React.Component {
   render() {
     return (
       <td
-        className="cell"
+        className={"cell " + this.props.mark[parseInt(this.props.loc[0])][
+          parseInt(this.props.loc[2])
+        ]}
         onClick={() => this.props.markBox(this.props.loc, this.props.turn)}
       >
         {
           this.props.mark[parseInt(this.props.loc[0])][
-            parseInt(this.props.loc[2])
+          parseInt(this.props.loc[2])
           ]
         }
       </td>

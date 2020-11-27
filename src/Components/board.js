@@ -85,33 +85,55 @@ class Board extends React.Component {
     ) {
       this.setState(
         (currState) => {
-          console.log(loc);
+          console.log(loc, "<<< player move");
           const oldBoardState = _.cloneDeep(currState.boardState);
-          oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = "x"; //currState.turn;
+          let currTurn = "x"
+          oldBoardState[parseInt(loc[0])][parseInt(loc[2])] = currTurn; //currState.turn;
 
-          let oppRow = Math.floor(Math.random() * 3);
-          let oppColumn = Math.floor(Math.random() * 3);
-          console.log(oppRow, oppColumn);
-          let counter = 0;
-          while (counter++ < 100 && oldBoardState[oppRow][oppColumn]) {
-            oppRow = Math.floor(Math.random() * 3);
-            oppColumn = Math.floor(Math.random() * 3);
+          // after player move, check if win
+          if (this.checkWin(oldBoardState, currTurn)) {
+            //end game, return state with winner
+            const newState = {
+              boardState: oldBoardState,
+              winner: this.checkWin(oldBoardState, currTurn),
+            };
+            console.log(newState);
+            return newState;
+
+          } else {
+            //continue
+            currTurn = "o";
+
+            //randomise generated computer input
+            let oppRow = Math.floor(Math.random() * 3);
+            let oppColumn = Math.floor(Math.random() * 3);
+
+            let counter = 0;
+            while (counter++ < 100 && oldBoardState[oppRow][oppColumn]) {
+              oppRow = Math.floor(Math.random() * 3);
+              oppColumn = Math.floor(Math.random() * 3);
+            }
+
+            if (counter < 100) {
+              console.log(oppRow, oppColumn, "<<< comp move");
+              oldBoardState[oppRow][oppColumn] = currTurn;
+              // draw logic
+            }
+
+
+            // after computer move, check if win
+
+            const newState = {
+              boardState: oldBoardState,
+              winner: this.checkWin(oldBoardState, currTurn),
+            };
+            console.log(newState);
+            return newState;
           }
-          oldBoardState[oppRow][oppColumn] = "o";
 
-          const newState = {
-            boardState: oldBoardState,
-            turn: currState.turn === "x" ? "o" : "x",
-            winner: this.checkWin(oldBoardState, currState.turn),
-          };
-          console.log(newState);
-          return newState;
+
+
         }
-        // () => {
-        //   console.log(this.state.winner);
-        //   if (this.state.winner) {
-        //     alert("Winner!");
-        //   }
       );
     }
   };
